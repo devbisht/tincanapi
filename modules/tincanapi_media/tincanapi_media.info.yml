@@ -1,0 +1,9 @@
+name: 'Tin Can API (Media)'
+description: 'Tin Can API common functions for media objects.'
+package: 'Tin Can API'
+dependencies:
+  tincanapi: 'drupal:tincanapi'
+  tincanapi_content_types: 'drupal:tincanapi_content_types'
+  tincanapi_sdk: 'tincanapi_sdk:tincanapi_sdk'
+core: 8.x
+type: module

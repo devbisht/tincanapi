@@ -1,0 +1,77 @@
+<?php
+
+use Drupal\node\Entity\NodeType;
+use Drupal\tincanapi_sdk\Utilities\Utilities;
+
+/**
+ * @file
+ * A Tin Can API module to handle content type tracking.
+ */
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function tincanapi_content_types_form_tincanapi_admin_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  
+  $form['content_types'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Content Types'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+  );
+
+  $content_types = NodeType::loadMultiple();
+  $content_type_options = [];
+  $config = \Drupal::config('tincanapi.settings');
+
+  $tincanapi_default_types = [];
+  if($config->get('tincanapi_content_types')) {
+    $tincanapi_default_types = $config->get('tincanapi_content_types');
+  }
+  foreach ($content_types as $machine_name => $content_type) {
+    $content_type_options[$content_type->id()] = $label = $content_type->label();
+  }
+  
+
+  $form['content_types']['tincanapi_content_types'] = array(
+    '#type' => 'checkboxes',
+    '#title' => t('Track content type views'),
+    '#default_value' => $tincanapi_default_types,
+    '#options' => $content_type_options,
+  );
+
+  $nodeEntity =$nodeEntity = \Drupal::service('entity_display.repository');
+  $entity_info = $nodeEntity->getViewModes('node');
+  $view_mode_options = [];
+
+  foreach ($entity_info as $view_mode_name => $view_mode) {
+    $view_mode_options[$view_mode_name] = $view_mode['label'];
+  }
+  
+  $tincanapi_default_modes = [];
+  if($config->get('tincanapi_view_modes')) {
+    $tincanapi_default_modes = $config->get('tincanapi_view_modes');
+  }
+
+  $form['content_types']['tincanapi_view_modes'] = array(
+    '#type' => 'checkboxes',
+    '#title' => t('Track the selected content types in the following view modes.'),
+    '#default_value' => $tincanapi_default_modes,
+    '#options' => $view_mode_options,
+  );
+}
+
+/**
+ * Implements hook_node_view().
+ */
+function tincanapi_content_types_node_view(array &$build, \Drupal\Core\Entity\EntityInterface $entity, \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display, $view_mode) {
+  $config = \Drupal::config('tincanapi.settings');
+  $content_types = array_filter($config->get('tincanapi_content_types'));
+  $view_modes = array_filter($config->get('tincanapi_view_modes'));
+  if (in_array($entity->getType(), $content_types) && in_array($view_mode, $view_modes)) {
+    $utils = new Utilities();
+    $trackable = $utils->tincanapi_sdk_add_trackable_path('node/' . $entity->id());
+    $build['#attached']['drupalSettings']['tincanapi']['trackable'] = $trackable;
+  }
+  
+}

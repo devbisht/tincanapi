@@ -1,0 +1,10 @@
+tincanapi_sdk_basic:
+  version: VERSION
+  js:
+    js/tincanapi_sdk.js: {}
+  dependencies:
+    - core/jquery
+tincanapi_sdk_local:
+  version: VERSION
+  js:
+    js/tincansdk.js: {}

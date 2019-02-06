@@ -1,0 +1,22 @@
+<?php
+
+/**
+ * @file
+ * Install and uninstall functions for the Tin Can API (Content Types) module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function tincanapi_content_types_install() {
+  \Drupal::configFactory()->getEditable('tincanapi.settings')->set('tincanapi_content_types', array())->save();
+  \Drupal::configFactory()->getEditable('tincanapi.settings')->set('tincanapi_view_modes', array())->save();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function tincanapi_content_types_uninstall() {
+  \Drupal::configFactory()->getEditable('tincanapi.settings.tincanapi_content_types')->delete();
+  \Drupal::configFactory()->getEditable('tincanapi.settings.tincanapi_view_modes')->delete();
+}

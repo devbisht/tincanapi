@@ -1,0 +1,14 @@
+<?php
+
+/**
+ * @file
+ * Install and uninstall functions for the Tin Can API (SDK) module.
+ */
+
+/**
+ * Install placeholder.
+ */
+function tincanapi_sdk_update_7101() {
+
+  // Maybe someday.
+}

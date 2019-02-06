@@ -1,0 +1,6 @@
+tincanapi_h5p:
+  version: VERSION
+  js:
+    js/tincanapi_h5p.js: {}
+  dependencies:
+    - core/jquery

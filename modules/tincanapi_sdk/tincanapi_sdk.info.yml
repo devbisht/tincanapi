@@ -1,0 +1,7 @@
+name: 'Tin Can API (SDK)'
+description: 'Tin Can API SDK implementation'
+package: 'Tin Can API'
+dependencies:
+  tincanapi: 'drupal:tincanapi'
+core: 8.x
+type: module

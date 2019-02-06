@@ -1,0 +1,101 @@
+<?php
+
+use Drupal\tincanapi_sdk\Utilities\Utilities;
+
+/**
+ * @file
+ * A Tin Can API module to implement the LL SDK.
+ *
+ * @author matvp
+ */
+
+
+/**
+ * Implements hook_preprocess_page().
+ */
+function tincanapi_sdk_preprocess_page(&$vars) {
+  // I think we don't need this line as js is being included on init service
+  $vars['#attached']['drupalSettings']['tincanapi']['modalPage'] = \Drupal\Core\Url::fromRoute("<current>")->toString();
+
+  /*
+   * drupal_get_js() gets called twice, probably because a module uses drupal_add_js() and re-invokes $variables['scripts'] = drupal_get_js().
+   */
+  static $tincanapi_sdk_installed;
+
+  if ($tincanapi_sdk_installed) {
+    return;
+  }
+
+  // If page is admin.
+  //$route = \Drupal::routeMatch()->getRouteObject();
+  // $route = \Drupal\Core\Url::fromRoute("<current>")->toString();
+  if (\Drupal::service('router.admin_context')->isAdminRoute()) {
+    return;
+  }
+
+  $config = \Drupal::config('tincanapi.settings');
+  // If no endpoint is set, abort.
+  $tincan_endpoint = $config->get('tincanapi_endpoint');
+
+  if (!$tincan_endpoint) {
+    return;
+  }
+
+  global $base_url;
+  $utils = new Utilities();
+
+  // Load tincanapi_sdk.js manually because we'd like to give a weight to this.
+  $module_path = $base_url . '/' . drupal_get_path('module', 'tincanapi_sdk');
+  // drupal_add_js($module_path . '/js/tincanapi_sdk.js', $js_placement);
+  $url = $module_path . '/js/tincanapi_sdk.js';
+
+  $vars['#attached']['library'][] = 'tincanapi_sdk/tincanapi_sdk_basic';
+
+  // For debug purposes, it's better to load the remote JS SDK.
+  $load_tincan_sdk_remotely = FALSE;
+  
+  if (!$load_tincan_sdk_remotely) {
+    // Load local SDK.
+    $vars['#attached']['library'][] = 'tincanapi_sdk/tincanapi_sdk_local';
+  } 
+  else {
+    // Include the remote JS.
+    $remote_url = $utils->tincansdk_load_js_remotely($tincan_endpoint);
+    $vars['#attached']['html_head'][] = [
+      [
+        '#type' => 'html_tag',
+        '#tag' => 'script',
+        '#attributes' => array('src' => $remote_url),
+      ],
+      'tincanapi_sdk-remote',
+    ];
+  }
+  $other_config = $utils->tincanapi_sdk_config();
+  $vars['#attached']['html_head'][] = [
+    [
+      '#type' => 'html_tag',
+      '#tag' => 'script',
+      '#value' => $other_config,
+    ],
+    'tincanapi_sdk-inline',
+  ];
+
+  $tincanapi_sdk_installed = TRUE;
+}
+
+
+/**
+ * Implements hook_js_settings_alter().
+ *
+ */
+function tincanapi_sdk_js_settings_alter(array &$settings, \Drupal\Core\Asset\AttachedAssetsInterface $assets) {
+  global $base_url;
+  //$node_url = $_GET['q'];
+  $node_url = \Drupal::request()->request->get('q'); // form param
+  $path = \Drupal::request()->getRequestUri();
+  $current_path = \Drupal::service('path.current')->getPath();
+  $utils = new Utilities();
+  $settings['tincanapi']['modalPage'] = $base_url . '/' . $current_path;
+  $aliases = $utils->tincanapi_sdk_add_custom_alias($path, $node_url);
+  $settings['tincanapi']['aliases'] = $aliases;
+ }

@@ -1,0 +1,16 @@
+<?php
+
+/**
+ * @file
+ * Install and uninstall functions for the Tin Can API (Links) module.
+ */
+
+/**
+ * Implements hook_uninstall().
+ */
+function tincanapi_links_uninstall() {
+  \Drupal::configFactory()->getEditable('tincanapi.settings.tincanapi_links_external')->delete();
+  \Drupal::configFactory()->getEditable('tincanapi.settings.tincanapi_links_extensions')->delete();
+  \Drupal::configFactory()->getEditable('tincanapi.settings.tincanapi_anonymous')->delete();
+  \Drupal::configFactory()->getEditable('tincanapi.settings.tincanapi_simplify_id')->delete();
+}

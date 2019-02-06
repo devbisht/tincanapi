@@ -1,0 +1,16 @@
+<script>
+    window.tincanAsyncInit = function () {
+        TC.init({
+            endpoint: '#XAPI#',
+            auth_user: '#AUTH_USER#',
+            auth_password: '#AUTH_PASSWORD#',
+        });
+    };
+
+    !function(a,b,c){
+        var d,e=a.getElementsByTagName(b)[0];
+        a.getElementById(c)||(d=a.createElement(b),d.id=c,
+        d.src="#URL#",
+        e.parentNode.insertBefore(d,e))
+    }(document,"script","tincansdk");
+</script>

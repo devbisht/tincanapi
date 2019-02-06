@@ -1,0 +1,53 @@
+<?php
+
+/**
+ * @file
+ * A Tin Can API module that contains functions used for media related modules.
+ */
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function tincanapi_media_form_tincanapi_admin_form_alter(&$form, &$form_state, $form_id) {
+  $config = \Drupal::config('tincanapi.settings');
+  $form['media'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Media'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+  );
+
+  $tracking_type_options = array(
+    'youtube' => 'YouTube',
+    'vimeo' => 'Vimeo',
+  );
+
+  $default_checkboxes = [];
+  if($config->get('tincanapi_media_tracking_types')) {
+    $default_checkboxes = $config->get('tincanapi_media_tracking_types');
+  }
+
+  $form['media']['tincanapi_media_tracking_types'] = array(
+    '#type' => 'checkboxes',
+    '#title' => t('Track media type'),
+    '#default_value' => $default_checkboxes,
+    '#options' => $tracking_type_options,
+  );
+}
+
+
+/**
+ * Implements hook_preprocess_page().
+ */
+function tincanapi_media_preprocess_page(&$vars) {
+  $media_tracking_types = \Drupal::config('tincanapi.settings')->get('tincanapi_media_tracking_types');
+
+  $options = [];
+  foreach ($media_tracking_types as $type => $enabled) {
+    if ($enabled) {
+      $options[] = $type;
+    }
+  }
+
+  $vars['#attached']['drupalSettings']['tincanapi']['settings']['media_tracking_types'] = $options;
+}

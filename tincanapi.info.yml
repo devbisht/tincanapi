@@ -1,0 +1,8 @@
+name: 'Tin Can API'
+description: 'Provides integration with the Tin Can API.'
+package: 'Tin Can API'
+core: 8.x
+dependencies:
+  libraries: 'libraries:libraries'
+type: module
+configure: tincanapi.admin_form

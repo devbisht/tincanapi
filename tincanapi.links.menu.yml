@@ -1,0 +1,5 @@
+tincanapi.admin_form:
+  route_name: tincanapi.admin_form
+  title: 'Tin Can API'
+  description: 'Configure the Tin Can API settings.'
+  parent: system.admin_config_services

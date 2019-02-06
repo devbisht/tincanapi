@@ -1,0 +1,8 @@
+name: 'Tin Can API (h5p)'
+description: 'Tin Can API reporting for h5p videos.'
+package: 'Tin Can API'
+dependencies:
+  tincanapi: 'drupal:tincanapi'
+  tincanapi_sdk: 'tincanapi_sdk:tincanapi_sdk'
+core: 8.x
+type: module

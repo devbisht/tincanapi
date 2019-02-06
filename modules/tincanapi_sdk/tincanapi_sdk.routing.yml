@@ -1,0 +1,7 @@
+tincanapi_sdk.ajax_callback:
+  path: /ajax/tincanapi/track_statement
+  defaults:
+    _title: 'Tin Can SDK API'
+    _controller: '\Drupal\tincanapi_sdk\Controller\DefaultController::tincanapi_sdk_ajax_callback'
+  requirements:
+    _permission: 'access content'

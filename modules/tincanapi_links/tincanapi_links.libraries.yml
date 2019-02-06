@@ -1,0 +1,6 @@
+tincanapi_link:
+  version: VERSION
+  js:
+    js/tincanapi_links.js: {}
+  dependencies:
+    - core/jquery

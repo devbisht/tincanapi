@@ -1,0 +1,17 @@
+{
+  "name": "tincansdk",
+  "version": "1.0.0",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-browserify": "^4.0.1",
+    "grunt-contrib-copy": "^0.8.2",
+    "grunt-contrib-uglify": "^0.11.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-php": "^1.5.1"
+  },
+  "dependencies": {
+    "moment": "^2.11.2",
+    "superagent": "^1.6.1",
+    "fingerprintjs2": "^1.0.3"
+  }
+}

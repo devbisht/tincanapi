@@ -1,0 +1,8 @@
+name: 'Tin Can API (Quiz)'
+description: 'Tin Can API reporting for quiz results.'
+package: 'Tin Can API'
+dependencies:
+  tincanapi: 'drupal:tincanapi'
+  quiz: 'quiz:quiz'
+core: 8.x
+type: module

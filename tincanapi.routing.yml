@@ -1,0 +1,7 @@
+tincanapi.admin_form:
+  path: /admin/config/services/tincanapi
+  defaults:
+    _title: 'Tin Can API'
+    _form: \Drupal\tincanapi\Form\TincanapiAdminForm
+  requirements:
+    _permission: 'administer tincanapi configuration'

@@ -1,0 +1,25 @@
+<?php
+
+/**
+ * @file
+ * Install and uninstall functions for the Tin Can API (Content Types) module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function tincanapi_media_install() {
+  $media_tracking_types = array(
+    'youtube',
+    'vimeo',
+  );
+  \Drupal::configFactory()->getEditable('tincanapi.settings')->set('tincanapi_media_tracking_types', $media_tracking_types)->save();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function tincanapi_media_uninstall() {
+  \Drupal::configFactory()->getEditable('tincanapi.settings.tincanapi_media_tracking_types')->delete();
+}
+

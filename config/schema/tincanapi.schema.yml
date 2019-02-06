@@ -1,0 +1,10 @@
+tincanapi.settings:
+  type: mapping
+  label: Settings
+  mapping:
+    tincanapi_endpoint:
+      type: string
+    tincanapi_auth_user:
+      type: string
+    tincanapi_auth_password:
+      type: string

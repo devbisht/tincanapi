@@ -1,0 +1,29 @@
+<?php
+
+/**
+ * @file
+ * Install and uninstall functions for the Tin Can API module.
+ */
+
+/**
+ * Implements hook_uninstall().
+ */
+function tincanapi_uninstall() {
+  \Drupal::configFactory()->getEditable('tincanapi.settings.tincanapi_endpoint')->delete();
+  \Drupal::configFactory()->getEditable('tincanapi.settings.tincanapi_auth_password')->delete();
+  \Drupal::configFactory()->getEditable('tincanapi.settings.tincanapi_auth_user')->delete();
+  \Drupal::configFactory()->getEditable('tincanapi.settings.tincanapi_anonymous')->delete();
+  \Drupal::configFactory()->getEditable('tincanapi.settings.tincanapi_watchdog')->delete();
+  \Drupal::configFactory()->getEditable('tincanapi.settings.tincanapi_simplify_id')->delete();
+}
+
+/**
+ * Add simplify variable + install tincanapi_profile.
+ */
+function tincanapi_update_7101() {
+  // Add simplify variable.
+  \Drupal::configFactory()->getEditable('tincanapi.settings')->set('tincanapi_simplify_id', TRUE)->save();
+
+  // Install tincanapi_profile.
+  module_enable(array('tincanapi_profile'));
+}

@@ -1,0 +1,8 @@
+name: 'Tin Can API (Content Types)'
+description: 'Tin Can API reporting for specific content types.'
+package: 'Tin Can API'
+dependencies:
+  tincanapi: 'drupal:tincanapi'
+  tincanapi_sdk: 'tincanapi_sdk:tincanapi_sdk'
+core: 8.x
+type: module
