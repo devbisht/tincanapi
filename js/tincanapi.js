@@ -3,7 +3,7 @@
  * Handles creating statements using JS.
  */
 
-(function ($) {
+(function ($, Drupal, drupalSettings) {
 
   Drupal.tincanapi = {
     track: function(data, callback) {
@@ -41,7 +41,7 @@
     }
   };
 
-  $(document).bind("CToolsDetachBehaviors", function() {
+  $(document).on("CToolsDetachBehaviors", function() {
     if (drupalSettings.tincanapi && history[history.length - 1] == drupalSettings.tincanapi.currentPage) {
       history.pop();
       drupalSettings.tincanapi.currentPage = history[history.length - 1];
@@ -62,7 +62,7 @@
   if ($.fn.on) {
     $(document).on('load', '.l-page-container', loadCallback);
   } else {
-    $('.l-page-container').live('load', loadCallback);
+    $('.l-page-container').on('load', loadCallback);
   }
 
 })(jQuery, Drupal, drupalSettings);

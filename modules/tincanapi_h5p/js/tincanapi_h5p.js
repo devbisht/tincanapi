@@ -1,4 +1,4 @@
-(function ($) {
+(function ($, Drupal, drupalSettings) {
 
     if (!window.H5P) {
         return;
@@ -15,7 +15,7 @@
     // and sends an additional started statement.
     var convertedPlayStatements = [];
 
-    $(document).bind('sendingXApiStatement', function (event, statement) {
+    $(document).on('sendingXApiStatement', function (event, statement) {
         if (statement.verb.display['en-US'] === 'play') {
             if (convertedPlayStatements[statement.object.id] === undefined) {
                 convertedPlayStatements[statement.object.id] = true;
@@ -55,11 +55,19 @@
         }
     }
 
+    /*
     $(document).ready(function () {
         $('.h5p-iframe').each(function () {
             $(this).load(function () {
                 trackYouTubeVideo(this);
             });
         });
+    });*/
+
+    $('.h5p-iframe').each(function () {
+        $(this).load(function () {
+            trackYouTubeVideo(this);
+        });
     });
-})(jQuery);
+    
+})(jQuery, Drupal, drupalSettings);

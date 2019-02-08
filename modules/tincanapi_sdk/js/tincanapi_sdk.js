@@ -1,7 +1,7 @@
 /**
  * Tincan API SDK
  */
-(function ($) {
+(function ($, Drupal, drupalSettings) {
 
     var _parent = null;
 
@@ -93,7 +93,7 @@
     /**
      * Tincan SDK ready.
      */
-    $(document).bind('tincanReady', function () {
+    $(document).on('tincanReady', function () {
         var options = {};
 
         var parentId = parentNodeId();
@@ -129,7 +129,7 @@
         }
     };
 
-    $(document).bind("CToolsDetachBehaviors", function() {
+    $(document).on("CToolsDetachBehaviors", function() {
         if (!_parent)
             return;
 
@@ -139,7 +139,7 @@
         TINCAN.registerPageLeave();
     });
 
-    $(window).bind('onpopstate', function (event, data) {
+    $(window).on('onpopstate', function (event, data) {
         var url = window.location.href;
 
         TINCAN.registerPageLeave();
@@ -153,6 +153,7 @@
         });
     });
 
+    /*
     $(document).ready(function () {
         if (!window.TINCAN) {
             console.log('Tincan SDK not loaded, cannot bootstrap.');
@@ -161,5 +162,13 @@
 
         TINCAN.bootstrap();
     });
+    */
+
+   if (!window.TINCAN) {
+        console.log('Tincan SDK not loaded, cannot bootstrap.');
+        return;
+    } else {
+        TINCAN.bootstrap();
+    }
 
 })(jQuery, Drupal, drupalSettings);

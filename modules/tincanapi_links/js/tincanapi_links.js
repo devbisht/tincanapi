@@ -1,4 +1,5 @@
-(function ($) {
+
+(function ($, Drupal, drupalSettings) {
 
   function trackLinkAnchor($anchor, verb) {
     var statement = new TINCAN.Statement;
@@ -54,7 +55,7 @@
     return str;
   }
 
-  function tincanReady () {
+  function tincanReady() {
     var callback = function () {
       if (!drupalSettings.tincanapi.links)
         return;
@@ -70,7 +71,6 @@
       else if (isTrackable('downloads', href))
         trackLinkAnchor(link, 'downloaded');
     };
-
     if ($.fn.on) {
       $(document).on('click', 'a', callback);
     } else {
@@ -78,13 +78,19 @@
     }
   }
 
+  // we do not need ready function in jQuery 3
+  /*
   $(document).ready(function () {
     if (!drupalSettings.tincanapi)
       return;
-
-    $(document).bind('tincanReady', tincanReady);
+    $(document).on('tincanReady', tincanReady);
   });
+  */
 
+  if (drupalSettings.tincanapi) {
+    $(document).on('tincanReady', tincanReady);
+  }
+    
   if (!Drupal.tincanapi) {
     Drupal.tincanapi = {};
   }
