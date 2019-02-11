@@ -153,7 +153,6 @@
         });
     });
 
-    /*
     $(document).ready(function () {
         if (!window.TINCAN) {
             console.log('Tincan SDK not loaded, cannot bootstrap.');
@@ -162,13 +161,6 @@
 
         TINCAN.bootstrap();
     });
-    */
-
-   if (!window.TINCAN) {
-        console.log('Tincan SDK not loaded, cannot bootstrap.');
-        return;
-    } else {
-        TINCAN.bootstrap();
-    }
+    
 
 })(jQuery, Drupal, drupalSettings);

@@ -1,5 +1,5 @@
 (function (window) {
-
+  
   // Known issues:
   // - When CPU is to busy, the getDuration of youtube/vimeo can lag or just don't send data. Because the library can't track the data, it will issue a skip event (instead of a watched event)
   // - When the video starts, the initial play event will not have startpoint 0, but startpoint 0.4s or something. Because it can take an interval before we notice the start.

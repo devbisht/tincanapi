@@ -391,9 +391,6 @@ class Utilities {
     $basic_auth_user = \Drupal::config('tincanapi.settings')->get('tincanapi_auth_user');
     $basic_auth_pass = \Drupal::config('tincanapi.settings')->get('tincanapi_auth_password');
 
-    // get basic auth
-    $basic_auth = \Drupal::config('tincanapi.settings')->get('tincanapi_auth_basic');
-
     // Sanitize endpoint.
     $end_point = trim($end_point);
     if (substr($end_point, -1) == "/") {
@@ -416,7 +413,6 @@ class Utilities {
     $headers = array(
       'Content-Type: application/json',
       'X-Experience-API-Version: 1.0.3',
-      'Authorization: Basic ' . $basic_auth,
     );
 
     // Differentiate for different methods.
@@ -439,7 +435,7 @@ class Utilities {
 
     // Doing call.
     curl_setopt($ch, CURLOPT_USERPWD, $basic_auth_user . ':' . $basic_auth_pass);
-    curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+    //curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
     curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0); // ignore ssl warning
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);

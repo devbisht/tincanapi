@@ -67,7 +67,7 @@ class TincanapiAdminForm extends ConfigFormBase {
     $form['api']['tincanapi_auth_user'] = [
       '#type' => 'textfield',
       '#title' => t('User'),
-      '#description' => t('The basic authenication user.'),
+      '#description' => t('The basic authenication user/client key/appid.'),
       '#default_value' => $config->get('tincanapi_auth_user'),
       '#required' => TRUE,
     ];
@@ -75,17 +75,9 @@ class TincanapiAdminForm extends ConfigFormBase {
     $form['api']['tincanapi_auth_password'] = [
       '#type' => 'textfield',
       '#title' => t('Password'),
-      '#description' => t('The basic authenication password.'),
+      '#description' => t('The basic authenication password/client secret.'),
       '#default_value' => $config->get('tincanapi_auth_password'),
       '#required' => TRUE,
-    ];
-
-    $form['api']['tincanapi_auth_basic'] = [
-      '#type' => 'textfield',
-      '#title' => t('Basic Auth (Encrypted)'),
-      '#description' => t('If above username and password do not work, paste encrypted basic auth keys here (generate it from Learning locker client creation page).'),
-      '#default_value' => $config->get('tincanapi_auth_basic'),
-      '#required' => FALSE,
     ];
 
     $form['api']['tincanapi_anonymous'] = [
